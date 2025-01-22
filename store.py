@@ -1,3 +1,4 @@
+import uuid
 from collections import deque
 from event import OrderSubmittedEvent, OrderRejectedEvent
 
@@ -13,13 +14,15 @@ class Store:
             event = OrderSubmittedEvent({
                 "customer": customer.name,
                 "product": product,
-                "order_id": str(uuid.uuid4()) })
+                "order_id": str(uuid.uuid4())
+            })
             self.events.append(event)
             print(f"Order submitted for {customer.name} - Product: {product}")
         else:
             event = OrderRejectedEvent({
                 "customer": customer.name,
-                "product": product })
+                "product": product
+            })
             self.events.append(event)
             print(f"Order rejected for {customer.name} - Product: {product} is out of stock")
 
