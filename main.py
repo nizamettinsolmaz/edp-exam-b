@@ -1,6 +1,6 @@
-# main.py
-from collections import deque
 import uuid
+from collections import deque
+import time
 
 class Event:
     def __init__(self, payload):
@@ -53,14 +53,21 @@ class Customer:
         print(f"{self.name} is ordering {product} from {store.name}")
         store.process_order(self, product)
 
+def event_loop(store):
+    while True:
+        if store.events:
+            store.process_events()
+        else:
+            print("No events to process, waiting...")
+        time.sleep(1)
+
 if __name__ == "__main__":
     store = Store("TechStore")
-    
     customer1 = Customer("John")
     customer2 = Customer("Jane")
     
     customer1.order(store, "computer")
     customer2.order(store, "computer")
     customer2.order(store, "computer")
-    
-    store.process_events()
+
+    event_loop(store)
